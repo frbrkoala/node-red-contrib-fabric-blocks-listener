@@ -1,0 +1,100 @@
+<script type="text/javascript">
+    RED.nodes.registerType('fabric-blocks-listener', {
+        category: 'function',
+        color: '#a6bbcf',
+        defaults: {
+            name: {
+                value: ""
+            },
+            peerAddress: {
+                value: "grpc://localhost:7051"
+            },
+            sslCert: {
+                value: ""
+            },
+            username: {
+                value: "admin"
+            },
+            mspId: {
+                value: "Org1MSP"
+            },
+            privateKeyPEM: {
+                value: "-----BEGIN PRIVATE KEY-----\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgrzBX85emSzLbfLbq\+MYtIuH19xut3xDtA46nPw2XpHyhRANCAAQBubukocf/AcK3n4O/D0Lso0CF+ijF\nBQi1sn+Ph971zvRcRoFdHaWCx/XXp0IP3uuaJB3j3VQtfFKdYDd5ja00\n-----END PRIVATE KEY-----",
+                required: true
+            },
+            signedCertPEM: {
+                value: "-----BEGIN CERTIFICATE-----\nMIICAjCCAaigAwIBAgIUWvrAII2KyeUlYtEsFAMsrJgauWcwCgYIKoZIzj0EAwIw\nczELMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNh\nbiBGcmFuY2lzY28xGTAXBgNVBAoTEG9yZzEuZXhhbXBsZS5jb20xHDAaBgNVBAMT\nE2NhLm9yZzEuZXhhbXBsZS5jb20wHhcNMTgxMTIyMDkwMDAwWhcNMTkxMTIyMDkw\nNTAwWjAhMQ8wDQYDVQQLEwZjbGllbnQxDjAMBgNVBAMTBWFkbWluMFkwEwYHKoZI\nzj0CAQYIKoZIzj0DAQcDQgAEAbm7pKHH/wHCt5+Dvw9C7KNAhfooxQUItbJ/j4fe\n9c70XEaBXR2lgsf116dCD97rmiQd491ULXxSnWA3eY2tNKNsMGowDgYDVR0PAQH/\nBAQDAgeAMAwGA1UdEwEB/wQCMAAwHQYDVR0OBBYEFDICqNnIaXMcNkapPoG5UkSY\nyMfIMCsGA1UdIwQkMCKAIEI5qg3NdtruuLoM2nAYUdFFBNMarRst3dusalc2Xkl8\nMAoGCCqGSM49BAMCA0gAMEUCIQDKw7B14kRFIA41LnmAsPNfh+imUyhSfMgYrnEn\n/Aj4RwIgMpkUcvaEa5bkP0WrRsxX1bSniPTWDuJQ0g5pmPxsFPA=\n-----END CERTIFICATE-----\n",
+                required: true
+            },
+            channelName: {
+                value: "mychannel"
+            },
+            startBlock: {
+                value: 24
+            },
+            endBlock: {
+                value: 0
+            },
+            disconnect: {
+                value: false
+            }
+        },
+        inputs: 1,
+        outputs: 2,
+        icon: "file.png",
+        label: function () {
+            return this.name || "fabric-blocks-listener";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="fabric-blocks-listener">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-peerAddress"><i class="fa fa-globe"></i> Peer</label>
+        <input type="text" id="node-input-peerAddress" placeholder="Peer address (default: grpc://localhost:7051)">
+    </div>
+    <div class="form-row">
+        <label for="node-input-sslCert"><i class="fa fa-certificate"></i> SSLCert</label>
+        <input type="text" id="node-input-sslCert" placeholder="PEM encoded SSL certificate (no  default)">
+    </div>
+    <div class="form-row">
+        <label for="node-input-username"><i class="fa fa-user"></i> Username</label>
+        <input type="text" id="node-input-username" placeholder="Name of user (default: admin)">
+    </div>
+    <div class="form-row">
+        <label for="node-input-mspId"><i class="fa fa-sitemap"></i> MspId</label>
+        <input type="text" id="node-input-mspId" placeholder="The MSP ID (default: Org1MSP)">
+    </div>
+    <div class="form-row">
+        <label for="node-input-privateKeyPEM"><i class="fa fa-key"></i> UsrKeyPEM</label>
+        <input type="text" id="node-input-privateKeyPEM" placeholder="PEM encoded user's private key (no default)">
+    </div>
+    <div class="form-row">
+        <label for="node-input-signedCertPEM"><i class="fa fa-certificate"></i> UsrCertPEM</label>
+        <input type="text" id="node-input-signedCertPEM" placeholder="PEM encoded user's certificate (no default)">
+    </div>
+    <div class="form-row">
+        <label for="node-input-channelName"><i class="fa fa-rss"></i> Channel</label>
+        <input type="text" id="node-input-channelName" placeholder="Channel name (default: mychannel)">
+    </div>
+    <div class="form-row">
+        <label for="node-input-startBlock"><i class="fa fa-toggle-right"></i> StartBlock</label>
+        <input type="number" id="node-input-startBlock" placeholder="Block number (default: -1, to start from latest)">
+    </div>
+    <div class="form-row">
+        <label for="node-input-endBlock"><i class="fa fa-toggle-left"></i> EndBlock</label>
+        <input type="number" id="node-input-endBlock" placeholder="Block number (default: 0 to keep syncing)">
+    </div>
+    <div class="form-row">
+        <label for="node-input-disconnect"><i class="fa fa-chain-broken"></i> Disconnect</label>
+        <input type="checkbox" id="node-input-disconnect">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="fabric-blocks-listener">
+    <p>A node that listens to the blocks events in Hyperledger Fabric peer and sends the blocks as JSON objects to ouput 1 and read/write set from every transaction to output 2</p>
+</script>
