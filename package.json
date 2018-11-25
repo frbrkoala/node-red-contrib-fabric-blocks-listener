@@ -1,13 +1,13 @@
 {
     "name": "node-red-contrib-fabric-blocks-listener",
-    "version": "1.3.0",
+    "version": "1.1.0",
     "description": "A node that listens to the blocks events in Hyperledger Fabric peer and sends the blocks as JSON objects to ouput 1 and read/write set from every transaction to output 2",
     "main": "fabric-blocks-listener.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "dependencies": {
-        "fabric-client": "1.3.0"
+        "fabric-client": "~1.1.0"
     },
     "keywords": [
         "node-red",
@@ -22,6 +22,6 @@
             "fabric-blocks-listener": "fabric-blocks-listener.js"
         }
     },
-    "author": "frbrkoala",
+    "author": "Nikolay Vlasov",
     "license": "Apache License 2.0"
 }

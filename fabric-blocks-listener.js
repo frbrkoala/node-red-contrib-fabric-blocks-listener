@@ -50,9 +50,9 @@ module.exports = function (RED) {
         flowContext.set("fbl.latestBlock", blockNumber);
 
         let validationCode = block.metadata.metadata[2]
-        if (validationCode === 0) {
-            validationCode = 'VALID';
-        }
+        // if (validationCode === 0) {
+        //     validationCode = 'VALID';
+        // }
 
         const transactionArray = block.data.data
         transactionArray.forEach((transaction) => {
@@ -60,6 +60,7 @@ module.exports = function (RED) {
             const txId = channelHeader.tx_id;
             const type = channelHeader.type;
             const ENDORSER_TRANSACTION = 3;
+            const VALID_CODE = 0;
 
             //blockLog = `blockNumber[${blockNumber}] validationCode[${validationCode}] txId[${txId}] type[${type}] \n`;
 
@@ -69,7 +70,7 @@ module.exports = function (RED) {
             }]);
 
 
-            if (type == ENDORSER_TRANSACTION) {
+            if (type == ENDORSER_TRANSACTION && validationCode == VALID_CODE) {
                 const transactionAction = transaction.payload.data.actions[0];
                 const chaincodeEndorsedAction = transactionAction.payload.action;
                 const txReadWriteSet = chaincodeEndorsedAction.proposal_response_payload.extension.results;
