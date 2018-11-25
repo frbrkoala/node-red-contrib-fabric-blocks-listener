@@ -174,6 +174,27 @@ module.exports = function (RED) {
             if (typeof msg.payload.endBlock === "number") {
                 flowContext.set("fbl.endBlock", msg.payload.endBlock);
             }
+            if (msg.payload.peerAddress) {
+                flowContext.set("fbl.peerAddress", msg.payload.peerAddress);
+            }
+            if (msg.payload.username) {
+                flowContext.set("fbl.username", msg.payload.username);
+            }
+            if (msg.payload.mspId) {
+                flowContext.set("fbl.mspId", msg.payload.mspId);
+            }
+            if (msg.payload.privateKeyPEM) {
+                flowContext.set("fbl.privateKeyPEM", msg.payload.privateKeyPEM);
+            }
+            if (msg.payload.signedCertPEM) {
+                flowContext.set("fbl.signedCertPEM", msg.payload.signedCertPEM);
+            }
+            if (msg.payload.channelName) {
+                flowContext.set("fbl.channelName", msg.payload.channelName);
+            }
+            if (typeof msg.payload.disconnect === "boolean") {
+                flowContext.set("fbl.disconnect", msg.payload.disconnect);
+            }
             main(node);
             //node.send(msg);
         });
