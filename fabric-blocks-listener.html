@@ -9,8 +9,14 @@
             peerAddress: {
                 value: "grpc://localhost:7051"
             },
+            connectTimeout: {
+                value: 3000
+            },
             sslCert: {
                 value: ""
+            },
+            sslHostName: {
+                value: "localhost"
             },
             username: {
                 value: "admin"
@@ -50,8 +56,16 @@
         <input type="text" id="node-input-peerAddress" placeholder="Peer address (default: grpc://localhost:7051)">
     </div>
     <div class="form-row">
+        <label for="node-input-connectTimeout"><i class="fa fa-clock-o"></i> ConnectTimeout</label>
+        <input type="text" id="node-input-connectTimeout" placeholder="Timeout for peer connection (deault: 3000 ms)">
+    </div>
+    <div class="form-row">
         <label for="node-input-sslCert"><i class="fa fa-certificate"></i> SSLCert</label>
         <input type="text" id="node-input-sslCert" placeholder="PEM encoded SSL certificate (no  default)">
+    </div>
+    <div class="form-row">
+        <label for="node-input-sslHostName"><i class="fa fa-shield"></i> sslHostName</label>
+        <input type="text" id="node-input-sslHostName" placeholder="The host name of the server, as used in SSL cert (default: localhost)">
     </div>
     <div class="form-row">
         <label for="node-input-username"><i class="fa fa-user"></i> Username</label>

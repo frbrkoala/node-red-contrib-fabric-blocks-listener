@@ -7,11 +7,24 @@ module.exports = function (RED) {
         const flowContext = node.context().flow;
 
         const peerAddress = flowContext.get("fbl.peerAddress");
+        const connectTimeout = flowContext.get("fbl.connectTimeout");
+        const sslCert = flowContext.get("fbl.sslCert");
+        const sslHostName = flowContext.get("fbl.sslHostName");
         const username = flowContext.get("fbl.username");
         const mspId = flowContext.get("fbl.mspId");
         const privateKeyPEM = flowContext.get("fbl.privateKeyPEM");
         const signedCertPEM = flowContext.get("fbl.signedCertPEM");
         const channelName = flowContext.get("fbl.channelName");
+
+        let peerConf = {
+            'request-timeout': connectTimeout
+        };
+
+        if (sslCert !== "" && sslCert) {
+            peerConf['ssl-target-name-override'] = sslHostName;
+            peerConf.pem = sslCert;
+            peerAddress = peerAddress.replace("grpc://", "grpcs://");
+        };
 
         // setup the fabric network
         const channel = fabric_client.newChannel(channelName);
@@ -154,10 +167,10 @@ module.exports = function (RED) {
 
         const flowContext = node.context().flow;
         flowContext.set("fbl.peerAddress", config.peerAddress);
+        flowContext.set("fbl.connectTimeout", config.connectTimeout);
+        flowContext.set("fbl.sslHostName", config.sslHostName);
         flowContext.set("fbl.username", config.username);
         flowContext.set("fbl.mspId", config.mspId);
-        flowContext.set("fbl.privateKeyPEM", config.privateKeyPEM);
-        flowContext.set("fbl.signedCertPEM", config.signedCertPEM);
         flowContext.set("fbl.channelName", config.channelName);
 
         flowContext.set("fbl.startBlock", config.startBlock);
@@ -176,6 +189,15 @@ module.exports = function (RED) {
             }
             if (msg.payload.peerAddress) {
                 flowContext.set("fbl.peerAddress", msg.payload.peerAddress);
+            }
+            if (msg.payload.peerAddress) {
+                flowContext.set("fbl.connectTimeout", msg.payload.connectTimeout);
+            }
+            if (msg.payload.sslCert) {
+                flowContext.set("fbl.sslCert", msg.payload.sslCert);
+            }
+            if (msg.payload.peerAddress) {
+                flowContext.set("fbl.sslHostName", msg.payload.sslHostName);
             }
             if (msg.payload.username) {
                 flowContext.set("fbl.username", msg.payload.username);
