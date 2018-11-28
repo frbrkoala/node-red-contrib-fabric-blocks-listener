@@ -64,7 +64,7 @@ module.exports = function (RED) {
         // }
 
         const transactionArray = block.data.data
-        transactionArray.forEach((transaction) => {
+        transactionArray.forEach((transaction, index) => {
             const channelHeader = transaction.payload.header.channel_header;
             const txId = channelHeader.tx_id;
             const type = channelHeader.type;
@@ -83,7 +83,8 @@ module.exports = function (RED) {
                 const transactionAction = transaction.payload.data.actions[0];
                 const chaincodeEndorsedAction = transactionAction.payload.action;
                 const txReadWriteSet = chaincodeEndorsedAction.proposal_response_payload.extension.results;
-                txReadWriteSet.blockNumber = blockNumber;
+                txReadWriteSet._blockNumber = blockNumber;
+                txReadWriteSet._txIndexInBlock = index;
 
                 //const transactionLog = `txReadWriteSet[${JSON.stringify(txReadWriteSet, null, 0)}] \n`;
                 //console.log(transactionLog);
