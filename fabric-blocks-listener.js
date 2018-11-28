@@ -31,10 +31,6 @@ module.exports = function (RED) {
         const peer = fabric_client.newPeer(peerAddress);
         channel.addPeer(peer);
 
-
-        const member_user = null;
-        const tx_id = null;
-
         await initUser(fabric_client, username, mspId, privateKeyPEM, signedCertPEM);
         await registerBlockEventListener(peer, channel, node);
     }
@@ -87,6 +83,7 @@ module.exports = function (RED) {
                 const transactionAction = transaction.payload.data.actions[0];
                 const chaincodeEndorsedAction = transactionAction.payload.action;
                 const txReadWriteSet = chaincodeEndorsedAction.proposal_response_payload.extension.results;
+                txReadWriteSet.blockNumber = blockNumber;
 
                 //const transactionLog = `txReadWriteSet[${JSON.stringify(txReadWriteSet, null, 0)}] \n`;
                 //console.log(transactionLog);
