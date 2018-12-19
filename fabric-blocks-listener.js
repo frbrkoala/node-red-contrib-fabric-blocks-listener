@@ -58,11 +58,6 @@ module.exports = function (RED) {
         const flowContext = node.context().flow;
         flowContext.set("fbl.latestBlock", blockNumber);
 
-        let validationCode = block.metadata.metadata[2]
-        // if (validationCode === 0) {
-        //     validationCode = 'VALID';
-        // }
-
         const transactionArray = block.data.data
         transactionArray.forEach((transaction, index) => {
             const channelHeader = transaction.payload.header.channel_header;
@@ -78,7 +73,7 @@ module.exports = function (RED) {
                 payload: block
             }]);
 
-
+            let validationCode = block.metadata.metadata[2][index]
             if (type == ENDORSER_TRANSACTION && validationCode == VALID_CODE) {
                 const transactionAction = transaction.payload.data.actions[0];
                 const chaincodeEndorsedAction = transactionAction.payload.action;
@@ -172,11 +167,11 @@ module.exports = function (RED) {
         flowContext.set("fbl.channelName", config.channelName);
 
         flowContext.set("fbl.startBlock", config.startBlock);
+        flowContext.set("fbl.latestBlock", config.startBlock);
         flowContext.set("fbl.endBlock", config.endBlock);
         flowContext.set("fbl.disconnect", config.disconnect);
 
-        console.log(config);
-        console.log(flowContext.get("fbl.latestBlock"));
+        console.log("Config: " + JSON.stringify(config));
 
         node.on('input', function (msg) {
             if (typeof msg.payload.startBlock === "number") {
