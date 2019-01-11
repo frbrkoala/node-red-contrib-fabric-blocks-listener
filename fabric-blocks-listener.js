@@ -26,7 +26,7 @@ module.exports = function (RED) {
             peerAddress = peerAddress.replace("grpc://", "grpcs://");
         };
 
-        // setup the fabric network
+        // setup the fabric network //
         const channel = fabric_client.newChannel(channelName);
         const peer = fabric_client.newPeer(peerAddress);
         channel.addPeer(peer);
