@@ -28,7 +28,7 @@ module.exports = function (RED) {
 
         // setup the fabric network //
         const channel = fabric_client.newChannel(channelName);
-        const peer = fabric_client.newPeer(peerAddress);
+        const peer = fabric_client.newPeer(peerAddress, peerConf);
         channel.addPeer(peer);
 
         await initUser(fabric_client, username, mspId, privateKeyPEM, signedCertPEM);
