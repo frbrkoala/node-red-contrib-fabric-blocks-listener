@@ -7,7 +7,7 @@ module.exports = function (RED) {
         const flowContext = node.context().flow;
 
         let peerAddress = flowContext.get("fbl.peerAddress");
-        const connectTimeout = flowContext.get("fbl.connectTimeout");
+        const connectTimeout = flowContext.get("fbl.connectTimeout") || 3000;
         const sslCert = flowContext.get("fbl.sslCert");
         const sslHostName = flowContext.get("fbl.sslHostName");
         const username = flowContext.get("fbl.username");
